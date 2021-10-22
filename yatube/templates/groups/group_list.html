@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% block title %}
+{% block content %}
 {% load static %}
 <!DOCTYPE html> <!-- Используется html 5 версии -->
 <html lang="ru"> <!-- Язык сайта - русский -->
@@ -16,15 +16,15 @@
     <meta name="theme-color" content="#ffffff">
     <!-- Подключен файл со стандартными стилями бустрап -->
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
-    <title>{{ title }}</title>
+    <title>Посты группы {{ group_title }}</title>
   </head>
   <body>
     <header>
       <!-- Использованы классы бустрапа для создания типовой навигации с логотипом -->
-      <!-- В дальнейшем тут будет создано полноценное меню -->
+      <!-- В дальнейшем тут будет создано полноценное меню -->    
       <nav class="navbar navbar-light" style="background-color: lightskyblue">
         <div class="container">
-          <a class="navbar-brand" href="{% url 'posts:index' %}">
+          <a class="navbar-brand" href="/">
             <img src="{% static 'img/logo.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
             <!-- тег span используется для добавления нужных стилей отдельным участкам текста -->
             <span style="color:red">Ya</span>tube</a>
@@ -32,45 +32,37 @@
         </div>
       </nav>      
     </header>
-    {% endblock title %}
-    {% block content %}
-    <main> 
+    <main>
       <!-- класс py-5 создает отступы сверху и снизу блока -->
-      <div class="container py-5">     
-        <h1>{{ title }}</h1>
-        {% for post in posts%}
+      <div class="container py-5">
+        <h1>{{ info }}</h1>
+        <p>
+          Посты группы {{ group_title }}
+        </p>
+        {% for post in group_ten_posts%}
         <article>
           <ul>
             <li>
-              Автор: {{ post.author }}
+              Автор: {{ post.author.first_name }} {{ post.author.last_name }},
             </li>
             <li>
-              Дата публикации: {{ post.pub_date }}
+              Дата публикации: {{ post.pub_date|date:"d E Y" }}
             </li>
           </ul>      
           <p>
-            {{ post.text|safe }}
-          </p>
-          {% if post.group != None %}
-          <p>
-          <a href="{% url 'groups:group_list' post.group.slug %}">Все посты группы</a>
-          </p>
-          {% endif %}
+            {{ post.text }}
+          </p>         
         </article>
           {% if forloop.last != True %}
         <hr>
           {% endif %}
         {% endfor %}
-        <!-- под последним постом нет линии -->
       </div>  
     </main>
-    <!-- Использованы классы бустрапа: -->
-    <!-- border-top: создаёт тонкую линию сверху блока -->
-    <!-- text-center: выравнивает текстовые блоки внутри блока по центру -->
-    <!-- py-3: контент внутри размещается с отступом сверху и снизу -->         
-    <footer class="border-top text-center py-3">
-      <!-- тег span используется для добавления нужных стилей отдельным участкам текста --> 
-      <p>© 2020 Copyright <span style="color:red">Ya</span>tube</p>    
+    <footer class="page-footer font-small blue border-top">
+      <div class="footer-copyright text-center py-3">© 2020 Copyright 
+        <p><span style="color:red">Ya</span>tube</p> 
+      </div>    
     </footer>
   </body>
-  {% endblock content %}
+  {% endblock content%}

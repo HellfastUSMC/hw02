@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('group/', include('groups.urls', namespace='groups')),
     path('', include('posts.urls', namespace='posts')),
-    path('group_list/', include('posts.urls')),
-    path('groups/', include('groups.urls')),
 ]
