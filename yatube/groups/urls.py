@@ -1,8 +1,7 @@
-from django.urls import path
 from . import views
+from django.urls import path
 
 app_name = 'groups'
 urlpatterns = [
-    path('', views.groups, name='groups'),
-    path('<slug>', views.group_posts, name='group_list'),
+    path('<slug:slug>/', views.group_posts, name='group_list'),
 ]

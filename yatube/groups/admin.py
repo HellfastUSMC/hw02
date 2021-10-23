@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import Group
 
-# Register your models here.
+from .models import Group
 
 
 class GroupAdmin(admin.ModelAdmin):

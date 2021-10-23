@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.db.models.fields.related import ForeignKey
+from django.contrib.auth import get_user_model
 
 from groups.models import Group
-# Create your models here.
+
 User = get_user_model()
 
 
@@ -17,7 +17,7 @@ class Post(models.Model):
     )
     group = ForeignKey(
         Group,
-        on_delete=models.CASCADE,
+        on_delete=models.SET_NULL,
         related_name='posts',
         blank=True, null=True
     )
