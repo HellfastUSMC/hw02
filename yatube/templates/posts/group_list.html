@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-
       <!-- класс py-5 создает отступы сверху и снизу блока -->
       <div class="container py-5">
         <h1>{{ info }}</h1>
@@ -11,10 +10,10 @@
         <article>
           <ul>
             <li>
-              Автор: {{ post.author.first_name }} {{ post.author.last_name }},
+              Автор: {{ post.author }}
             </li>
             <li>
-              Дата публикации: {{ post.pub_date|date:"d E Y" }}
+              Дата публикации: {{ post.pub_date }}
             </li>
           </ul>      
           <p>
@@ -26,5 +25,5 @@
           {% endif %}
         {% endfor %}
       </div>  
-    
+
   {% endblock content%}
