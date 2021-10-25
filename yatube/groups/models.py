@@ -9,6 +9,6 @@ class Group(models.Model):
     title = CharField(max_length=200)
     slug = SlugField(unique=True)
     description = TextField()
-    
+
     def __str__(self):
         return self.title
