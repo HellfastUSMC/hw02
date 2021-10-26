@@ -2,7 +2,7 @@
     {% block content %}
       <div class="container py-5">     
         <h1>{{ title }}</h1>
-        {% for post in posts%}
+        {% for post in posts %}
         <article>
           <ul>
             <li>
@@ -21,7 +21,7 @@
           </p>
           {% endif %}
         </article>
-          {% if forloop.last is False %}
+          {% if not forloop.last %}
             <hr>
           {% endif %}
         {% endfor %}

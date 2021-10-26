@@ -20,7 +20,7 @@
               {{ post.text|safe }}
             </p>         
           </article>
-          {% if forloop.last is False %}
+          {% if not forloop.last %}
             <hr>
           {% endif %}
         {% endfor %}

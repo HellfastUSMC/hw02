@@ -7,21 +7,21 @@
           </p>
         </h1>
         {% for post in group_ten_posts %}
-        <article>
-          <ul>
-            <li>
-              Автор: {{ post.author }}
-            </li>
-            <li>
-              Дата публикации: {{ post.pub_date }}
-            </li>
-          </ul>      
-          <p>
-            {{ post.text|safe }}
-          </p>         
-        </article>
-          {% if forloop.last is False %}
-        <hr>
+          <article>
+            <ul>
+              <li>
+                Автор: {{ post.author }}
+              </li>
+              <li>
+                Дата публикации: {{ post.pub_date }}
+              </li>
+            </ul>      
+            <p>
+              {{ post.text|safe }}
+            </p>         
+          </article>
+          {% if not forloop.last %}
+            <hr>
           {% endif %}
         {% endfor %}
       </div>  
