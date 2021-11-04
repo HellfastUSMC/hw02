@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
@@ -7,11 +8,14 @@ from .models import Group
 
 def index(request):
     template = 'posts/index.html'
-    page_title = 'Последние обновления на сайте'
-    title = page_title
-    posts = Post.objects.order_by('-pub_date')[:10]
+    page_title = 'Главная страница Yatube'
+    title = 'Последние обновления на сайте'
+    posts = Post.objects.order_by('-pub_date')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'posts': posts,
+        'posts': page_obj,
         'title': title,
         'page_title': page_title,
     }

@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 
@@ -9,10 +10,13 @@ def group_posts(request, slug):
     group = get_object_or_404(Group, slug=slug)
     title = group.title
     page_title = f'Посты группы {title}.'
-    posts = group.posts.all().order_by('-pub_date')[:10]
+    posts = group.posts.all().order_by('-pub_date')
+    paginator = Paginator(posts, 10)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
         'group_slug': slug,
-        'group_ten_posts': posts,
+        'posts': page_obj,
         'group_title': title,
         'page_title': page_title,
     }
