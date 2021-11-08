@@ -79,3 +79,8 @@ def post_detail(request, post_id):
         'text': text,
     }
     return render(request, template, context)
+
+def post_create(request):
+    template = 'posts/create_post.html'
+    context = {}
+    return render(request, template, context)

@@ -35,7 +35,8 @@ EMAIL_PORT = 587
 EMAIL_HOST_USER = '4epenki@gmail.com'
 EMAIL_HOST_PASSWORD = ''
 DEFAULT_FROM_EMAIL = '4epenki@gmail.com'
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
 SERVER_EMAIL = '4epenki@gmail.com'
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, 'sent_emails')
 
