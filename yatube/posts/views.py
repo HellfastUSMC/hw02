@@ -1,9 +1,11 @@
+from re import template
 from django.contrib.auth import get_user_model
 from django.core.paginator import Paginator
-from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from django.shortcuts import redirect, render
 from django.shortcuts import get_object_or_404
 
-
+from . import forms
 from .models import Post
 from .models import Group
 
@@ -80,7 +82,46 @@ def post_detail(request, post_id):
     }
     return render(request, template, context)
 
+
 def post_create(request):
-    template = 'posts/create_post.html'
-    context = {}
-    return render(request, template, context)
+    if request.user.is_authenticated:
+        template = 'posts/create_post.html'
+        #groups = Group.objects.all()
+        if request.method == 'POST':
+            PostForm = forms.CreatePost(request.POST)
+            if PostForm.is_valid():
+                new_post = Post(text=PostForm.cleaned_data['text'], author=request.user, group=PostForm.cleaned_data['group'])
+                new_post.save()
+                return redirect('posts:index')
+
+            PostForm = forms.CreatePost(request.POST)
+            context = {
+                'form': PostForm,
+                'request': request,
+                #'groups': groups,
+            }
+            return render(request, template, context)
+
+        PostForm = forms.CreatePost()
+        context = {
+            'form': PostForm,
+            'request': request,
+            #'groups': groups,
+        }
+        return render(request, template, context)
+    else:
+        return redirect('users:login')
+
+
+def post_edit(request, post_id):
+    post_obj = Post.objects.get(pk=post_id)
+    if request.user.is_authenticated and request.user == post_obj.author:
+        template = 'posts/create_post.html'
+        form = forms.CreatePost()
+        context = {
+            'is_edit': True,
+            'form': form,
+        }
+        return (request, template, context)
+    else:
+        return redirect('posts:post_detail/post_id')
