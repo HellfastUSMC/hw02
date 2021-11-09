@@ -26,6 +26,13 @@
                 все посты пользователя
               </a>
             </li>
+            {% if request.user.username == username %}
+              <li class="list-group-item">
+                <a href="{% url 'posts:post_edition' post_id %}">
+                  редактировать пост
+                </a>
+              </li>
+          {% endif %}
           </ul>
         </aside>
         <article class="col-12 col-md-9">

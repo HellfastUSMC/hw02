@@ -79,6 +79,7 @@ def post_detail(request, post_id):
         'posts_count': posts_count,
         'username': username,
         'text': text,
+        'post_id': post_id
     }
     return render(request, template, context)
 
@@ -86,7 +87,6 @@ def post_detail(request, post_id):
 def post_create(request):
     if request.user.is_authenticated:
         template = 'posts/create_post.html'
-        #groups = Group.objects.all()
         if request.method == 'POST':
             PostForm = forms.CreatePost(request.POST)
             if PostForm.is_valid():
@@ -98,7 +98,6 @@ def post_create(request):
             context = {
                 'form': PostForm,
                 'request': request,
-                #'groups': groups,
             }
             return render(request, template, context)
 
@@ -106,7 +105,6 @@ def post_create(request):
         context = {
             'form': PostForm,
             'request': request,
-            #'groups': groups,
         }
         return render(request, template, context)
     else:
@@ -114,14 +112,16 @@ def post_create(request):
 
 
 def post_edit(request, post_id):
-    post_obj = Post.objects.get(pk=post_id)
+    post_obj = get_object_or_404(Post, pk=post_id)
     if request.user.is_authenticated and request.user == post_obj.author:
         template = 'posts/create_post.html'
-        form = forms.CreatePost()
+        data = {'text': post_obj.text, 'group': post_obj.group}
+        form = forms.CreatePost(initial=data)
         context = {
             'is_edit': True,
-            'form': form,
+            'form': form
         }
-        return (request, template, context)
+        return render(request, template, context)
     else:
-        return redirect('posts:post_detail/post_id')
+        return redirect('posts:post_detail', post_id=post_id)
+    

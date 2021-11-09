@@ -18,7 +18,18 @@
             </ul>      
             <p>
               {{ post.text|safe }}
-            </p>         
+            </p>
+            <p>
+            <a href="{% url 'posts:post_detail' post.pk %}">Читать полностью</a>
+            </p>
+            <p>
+            {% if request.user == post.author %}
+              <p>
+                <a href="{% url 'posts:post_edition' post.pk %}">
+                  Редактировать пост
+                </a>
+              </p>
+            {% endif %}      
           </article>
           {% if not forloop.last %}
             <hr>
